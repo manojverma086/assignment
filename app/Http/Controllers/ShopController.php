@@ -37,15 +37,15 @@ class ShopController extends Controller
     {
         $shop = Shop::findOrFail($id);
         $shop->update($request->all());
-
-        return $shop;
+        return response()->json($shop, 200);
     }
+
     public function delete(Request $request, $id)
     {
         $shop = Shop::findOrFail($id);
         $shop->delete();
         if(DB::connection('mysql')->statement("DROP DATABASE ". $shop['shop_db'])) {
-            return 204;
+           return response()->json(null, 204);
         };
     }
 }

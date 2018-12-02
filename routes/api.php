@@ -19,12 +19,16 @@ Route::get('shops/{id}', 'ShopController@show');
 Route::post('shops', 'ShopController@store');
 Route::put('shops/{id}', 'ShopController@update');
 Route::delete('shops/{id}', 'ShopController@delete');
-Route::get('shops/{shopId}/products', 'ProductController@index');
-Route::get('shops/{shopId}/products/{id}', 'ProductController@show');
-Route::post('shops/{shopId}/products', 'ProductController@store');
-Route::put('shops/{shopId}/products/{id}', 'ProductController@update');
-Route::patch('shops/{shopId}/products/{id}', 'ProductController@patch');
-Route::delete('shops/{shopId}/products/{id}', 'ProductController@delete');
+
+/**
+ * Routes for product db
+ */
+Route::get('shops/{shopId}/products', 'ProductController@index')->middleware('logShopRequest');
+Route::get('shops/{shopId}/products/{id}', 'ProductController@show')->middleware('logShopRequest');
+Route::post('shops/{shopId}/products', 'ProductController@store')->middleware('logShopRequest');
+Route::put('shops/{shopId}/products/{id}', 'ProductController@update')->middleware('logShopRequest');
+Route::patch('shops/{shopId}/products/{id}', 'ProductController@patch')->middleware('logShopRequest');
+Route::delete('shops/{shopId}/products/{id}', 'ProductController@delete')->middleware('logShopRequest');
 
 // Route::middleware('auth:api')->get('/user', function (Request $request) {
 //     return $request->user();

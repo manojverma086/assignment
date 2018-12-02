@@ -25,7 +25,12 @@ class ShopController extends Controller
     {
         $shopName = $request->get('shop_name');
         $temp = explode(" ", $shopName);
-        $request->request->set('shop_db', strtolower($temp[0]."_".$temp[1]));
+        $shopswiththisname = Shop::findShopByName($shopName);
+        if($shopswiththisname && count($shopswiththisname) > 0) {
+            $request->request->set('shop_db', strtolower($temp[0]."_".$temp[1])."_".$shopswiththisname);
+        } else {
+            $request->request->set('shop_db', strtolower($temp[0]."_".$temp[1]));
+        }
         $request->request->set('requests', 0);
         $shop = Shop::create($request->all());
         if(DB::connection('mysql')->statement("CREATE DATABASE ". $shop['shop_db'] ." DEFAULT CHARACTER SET utf8;")) {
